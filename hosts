@@ -1,0 +1,6 @@
+[ansible]
+ec2-54-65-147-255.ap-northeast-1.compute.amazonaws.com
+
+[ansible:vars]
+ansible_ssh_private_key_file=~/.key/ansible.pem
+

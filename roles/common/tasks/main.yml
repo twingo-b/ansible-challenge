@@ -1,0 +1,42 @@
+---
+
+- name: upgrade all packages
+  yum: name="*" state=latest
+
+- name: install common tools
+  yum: name={{ item }} state=present
+  with_items:
+    ## 標準ツール
+    - mlocate
+    - jq
+    - tree
+    - pigz
+    - git
+    - postfix
+    - libcurl-devel
+    - elinks
+    - make
+    - telnet
+    - xfsprogs
+    - mailx
+    - cloud-utils
+    - stress
+    ## 監視ツール
+    - dstat
+    - monit
+    - nrpe*
+    - nagios-plugins-*
+    - munin-node
+
+- name: erase sendmail
+  yum: name=sendmail state=absent
+
+- name: /etc/yum.repos.d/td.repoをコピー
+  copy: src=etc/yum.repos.d/td.repo dest=/etc/yum.repos.d/td.repo owner=root group=root mode=0644
+
+- name: install td-agent
+  yum: name=td-agent state=present
+
+# - name: update td-agent fluent-gem
+#   command: /usr/lib64/fluent/ruby/bin/fluent-gem update
+
